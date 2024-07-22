@@ -1,21 +1,31 @@
-package com.rohan.chinchkar.Expense_Insights.expenses.entity;
+package com.rohan.chinchkar.Expense_Insights.entity;
 
 import java.util.Date;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
 public class ExpenseData {
 	
 	@Id
-	@GeneratedValue
+	@Column(name="id")
 	public String id;
+	
+	@Column(name="transaction_date")
 	public Date transactionDate;
+	
+	@Column(name="credit_amount")
 	public double credit_amt;
+	
+	@Column(name="debit_amount")
 	public double debit_amt;
+	
+	@Column(name="naration")
 	public String naration;
+	
+	@Column(name="category")
 	public String category;
 	
 	public ExpenseData() {
