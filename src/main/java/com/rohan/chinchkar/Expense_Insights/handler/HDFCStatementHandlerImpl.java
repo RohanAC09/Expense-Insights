@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.rohan.chinchkar.Expense_Insights.ExpenseInsightsApplication;
+import com.rohan.chinchkar.Expense_Insights.constants.ExpenseConstants;
 import com.rohan.chinchkar.Expense_Insights.entity.ExpenseData;
 
 @Component
@@ -30,19 +31,25 @@ public class HDFCStatementHandlerImpl implements DataSheetHandler{
         try (HSSFWorkbook ExcelWorkbook = new HSSFWorkbook(inputStream)){
             HSSFSheet targetedSheet = ExcelWorkbook.getSheet("Sheet 1");
             Iterator<Row> currentRowIterator = targetedSheet.iterator();
-            int rowNumber = 0;
             boolean endOfRecords=false;
+            boolean hasHeaderPart=true;
+            int rowNumber=0;
 
             while (currentRowIterator.hasNext()) {
                 Row rowEntries = currentRowIterator.next();
-
-                if (rowNumber <22) {
-                    rowNumber++;
-                    continue;
-                }
-
+                
                 Iterator<Cell> cellIterator = rowEntries.iterator();
                 int cellIndex = 0;
+                
+                if (hasHeaderPart) {
+                	if (ExpenseConstants.Date.equalsIgnoreCase(cellIterator.next().getStringCellValue())) {
+                		hasHeaderPart = false;
+                    	logger.info("#### Found header value \"Date\" at rowNumber = {}.", rowNumber);
+                    	currentRowIterator.next(); // For skipping next row containing symbols "****"
+                	}
+                	rowNumber++;
+                	continue;
+                }
 
                 ExpenseData expenseData = new ExpenseData();
 
@@ -56,16 +63,15 @@ public class HDFCStatementHandlerImpl implements DataSheetHandler{
 
                     switch (cellIndex) {
                         case 0:
+                        	// logger.info("#### Storing Date - {}", cellEntryData.getStringCellValue());
                         	expenseData.setTransactionDate(this.removeFirstCharAndConvertToDate(cellEntryData.getStringCellValue()));
                             break;
                         case 1:
                         	expenseData.setNaration(cellEntryData.getStringCellValue());
                             break;
-                        case 2:
-                        	expenseData.setId(cellEntryData.getStringCellValue());
-                            break;
                         case 4:
                         	expenseData.setDebit_amt(cellEntryData.getNumericCellValue());
+                        	expenseData.setCategory(this.setCategoryValue(expenseData.getNaration()));
                             break;
                         case 5:
                         	expenseData.setCredit_amt(cellEntryData.getNumericCellValue());
@@ -83,7 +89,7 @@ public class HDFCStatementHandlerImpl implements DataSheetHandler{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        logger.info("#### Successfully processed provided Excel Workbook");
+        logger.info("#### Successfully processed provided Excel Workbook with records = {}", expenseDataList.size());
         return expenseDataList;
 	}
 	
@@ -98,6 +104,13 @@ public class HDFCStatementHandlerImpl implements DataSheetHandler{
 		}
 		
 		return dateValue;
+	}
+	
+	private String setCategoryValue(String naration) {
+		
+		
+		
+		return null;
 	}
 
 }

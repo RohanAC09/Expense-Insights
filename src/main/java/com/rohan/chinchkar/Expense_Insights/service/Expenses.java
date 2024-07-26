@@ -10,6 +10,7 @@ import com.rohan.chinchkar.Expense_Insights.entity.ExpenseData;
 @Service
 public interface Expenses {
 	
-	public boolean saveExpenseDataSheetImpl(MultipartFile file);
+	public int saveExpenseDataSheetImpl(MultipartFile file);
 	public List<ExpenseData> getExpenseInsightsImpl();
+	public int saveAllRecords(List<ExpenseData> expenseDataList);
 }

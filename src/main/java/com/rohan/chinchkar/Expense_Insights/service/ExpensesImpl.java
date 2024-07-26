@@ -1,6 +1,7 @@
 package com.rohan.chinchkar.Expense_Insights.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -27,21 +28,22 @@ public class ExpensesImpl implements Expenses{
 	private static final Logger logger = (Logger) LoggerFactory.getLogger(ExpenseInsightsApplication.class);
 
 	@Override
-	public boolean saveExpenseDataSheetImpl(MultipartFile excelWorkbook) {
+	public int saveExpenseDataSheetImpl(MultipartFile excelWorkbook) {
 		if (!excelWorkbook.isEmpty()) {
-			
+			int numberOfRecordsStored=0;
 			dataSheetHandler = new HDFCStatementHandlerImpl();
 			try {
 				List<ExpenseData> expenseDataList = dataSheetHandler.convertFileToExpenseDataEntity(excelWorkbook.getInputStream());
 				//logger.info(expenseDataList.toString());
-				expenseDataRepository.saveAll(expenseDataList);
+//				expenseDataRepository.saveAll(expenseDataList);
+				numberOfRecordsStored = this.saveAllRecords(expenseDataList);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return true;
+			return numberOfRecordsStored;
 		} else {
-            return false;
+            return 0;
         }
 	}
 
@@ -49,8 +51,24 @@ public class ExpensesImpl implements Expenses{
 	public List<ExpenseData> getExpenseInsightsImpl() {
 		
 		List<ExpenseData> listOfData = expenseDataRepository.findAll();
-		logger.info("#### getExpenseInsightsImpl - {}", listOfData);
+		logger.info("#### getExpenseInsightsImpl -> number of records = {}", listOfData.size());
 		return listOfData;
 	}
 
+	@Override
+	public int saveAllRecords(List<ExpenseData> expenseDataList) {
+		if(!expenseDataList.isEmpty()) {
+			List<ExpenseData> uniqueExpenseDataList = new ArrayList<ExpenseData>();
+			for(ExpenseData expense: expenseDataList) {
+				if(expenseDataRepository.checkForUniqueNaration(expense.getNaration())==0) {
+					uniqueExpenseDataList.add(expense);
+				}
+			}
+			expenseDataRepository.saveAll(uniqueExpenseDataList);
+			return uniqueExpenseDataList.size();
+		} else {
+			return 0;
+		}
+		
+	}
 }

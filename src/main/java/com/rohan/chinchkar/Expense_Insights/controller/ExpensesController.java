@@ -28,8 +28,9 @@ public class ExpensesController {
 	@PostMapping(value = "/expense/saveData")
 	public ResponseEntity<String> saveExpenseDataSheet(@RequestParam("file") MultipartFile file) {
 		logger.info("#### Calling ExpensesImpl class for saving provided data");
-		expenses.saveExpenseDataSheetImpl(file);
-		return new ResponseEntity<>("Operation performed successfully",HttpStatus.OK);
+		int numberOfRecordStored = expenses.saveExpenseDataSheetImpl(file);
+		String responseString = String.format("Successfully stored %d unique records", numberOfRecordStored);
+		return new ResponseEntity<>(responseString,HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/expense/getInsights")

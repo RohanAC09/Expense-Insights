@@ -4,6 +4,8 @@ import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
@@ -11,7 +13,8 @@ public class ExpenseData {
 	
 	@Id
 	@Column(name="id")
-	public String id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public long id;
 	
 	@Column(name="transaction_date")
 	public Date transactionDate;
@@ -22,7 +25,7 @@ public class ExpenseData {
 	@Column(name="debit_amount")
 	public double debit_amt;
 	
-	@Column(name="naration")
+	@Column(name="naration", unique=true)
 	public String naration;
 	
 	@Column(name="category")
@@ -41,7 +44,7 @@ public class ExpenseData {
 		this.category = category;
 	}
 	
-	public ExpenseData(String id, Date transactionDate, double credit_amt, double debit_amt, String naration,
+	public ExpenseData(long id, Date transactionDate, double credit_amt, double debit_amt, String naration,
 			String category) {
 		super();
 		this.id = id;
@@ -52,10 +55,10 @@ public class ExpenseData {
 		this.category = category;
 	}
 	
-	public String getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public Date getTransactionDate() {
