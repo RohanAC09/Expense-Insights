@@ -1,6 +1,7 @@
 package com.rohan.chinchkar.Expense_Insights.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,13 @@ public class ExpensesController {
 		
 		List<ExpenseData> listOfData=expenses.getExpenseInsightsImpl();
 		return new ResponseEntity<List<ExpenseData>>(listOfData, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/expense/V1/getMonthlyExpensesForYear")
+	public ResponseEntity<Map<String, String>> getMonthlyExpensesDetails(@RequestParam int year) {
+		
+		Map<String, String> listOfData=expenses.getMonthlyExpensesDetailsForYear(year);
+		return new ResponseEntity<Map<String, String>>(listOfData, HttpStatus.OK);
 	}
 	
 

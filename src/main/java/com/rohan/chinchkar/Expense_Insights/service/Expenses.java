@@ -1,6 +1,7 @@
 package com.rohan.chinchkar.Expense_Insights.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,5 +13,6 @@ public interface Expenses {
 	
 	public int saveExpenseDataSheetImpl(MultipartFile file);
 	public List<ExpenseData> getExpenseInsightsImpl();
-	public int saveAllRecords(List<ExpenseData> expenseDataList);
+	public int saveAllUniqueRecords(List<ExpenseData> expenseDataList);
+	public Map<String, String> getMonthlyExpensesDetailsForYear(int year);
 }

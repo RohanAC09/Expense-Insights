@@ -12,7 +12,7 @@ import jakarta.persistence.Id;
 public class ExpenseData {
 	
 	@Id
-	@Column(name="id")
+	@Column(name="id", unique=true)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public long id;
 	
@@ -25,7 +25,7 @@ public class ExpenseData {
 	@Column(name="debit_amount")
 	public double debit_amt;
 	
-	@Column(name="naration", unique=true)
+	@Column(name="naration")
 	public String naration;
 	
 	@Column(name="category")
