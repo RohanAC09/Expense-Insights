@@ -1,4 +1,4 @@
-# Expens-Insights (Spending-Insights - Full Stack)
+# Expense-Insights (Spending-Insights) - Full Stack
 
 ## 🔗 Related Repositories
 - Backend microservice - [Expense-Insights](https://github.com/RohanAC09/Expense-Insights)
@@ -29,8 +29,10 @@ sudo docker run -d -p 8080:8080 --name expense-insights-container expense-insigh
 ### 🛑 Stopping the Container
 ```bash
 docker stop expense-insights-container
-docker rm expense-insights-containe
+docker rm expense-insights-container
 ```
+
+---
 
 ## 📜 Note
 
