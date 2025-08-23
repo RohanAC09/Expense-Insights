@@ -6,6 +6,15 @@
 
 ---
 
+### 🧩 Pre-requisites
+
+1. MySQL or related Database
+2. Keycloak or 3rd party login service
+3. Docker
+4. nvm - frontend microservices
+
+---
+
 ## 🚀 Running the Microservice
 
 Follow the steps below to run this microservice locally.
