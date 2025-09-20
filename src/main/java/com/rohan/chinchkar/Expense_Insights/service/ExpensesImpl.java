@@ -29,7 +29,26 @@ public class ExpensesImpl implements Expenses{
 	DataSheetHandler dataSheetHandler;
 	
 	private static final Logger logger = (Logger) LoggerFactory.getLogger(ExpenseInsightsApplication.class);
-
+	
+	@Override
+	public int uploadExpenseDtataSheetImpl(MultipartFile excelWorkbook) {
+		if (!excelWorkbook.isEmpty()) {
+			int numberOfRecordsStored=0;
+			dataSheetHandler = new HDFCStatementHandlerImpl();
+			try {
+				List<ExpenseData> expenseDataList = dataSheetHandler.convertFileToExpenseDataEntity(excelWorkbook.getInputStream());
+				// logger.info(expenseDataList.toString());
+				numberOfRecordsStored = this.saveAllUniqueRecords(expenseDataList);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return numberOfRecordsStored;
+		} else {
+            return 0;
+        }
+	}
+	
 	@Override
 	public int saveExpenseDataSheetImpl(MultipartFile excelWorkbook) {
 		if (!excelWorkbook.isEmpty()) {

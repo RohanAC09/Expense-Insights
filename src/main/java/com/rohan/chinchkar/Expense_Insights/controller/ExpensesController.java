@@ -26,11 +26,11 @@ public class ExpensesController {
 	
 	private static final Logger logger = (Logger) LoggerFactory.getLogger(ExpenseInsightsApplication.class);
 	
-	@PostMapping(value = "/expense/saveData")
-	public ResponseEntity<String> saveExpenseDataSheet(@RequestParam("file") MultipartFile file) {
+	@PostMapping(value = "/expense/uploadExpenseDtataSheet")
+	public ResponseEntity<String> uploadExpenseDtataSheet(@RequestParam("file") MultipartFile file) {
 		logger.info("#### Calling ExpensesImpl class for saving provided data");
-		int numberOfRecordStored = expenses.saveExpenseDataSheetImpl(file);
-		String responseString = String.format("Successfully stored %d unique records", numberOfRecordStored);
+		int numberOfRecordStored = expenses.uploadExpenseDtataSheetImpl(file);
+		String responseString = String.format("Successfully uploaded Sheet with %d unique records", numberOfRecordStored);
 		return new ResponseEntity<>(responseString,HttpStatus.OK);
 	}
 	
