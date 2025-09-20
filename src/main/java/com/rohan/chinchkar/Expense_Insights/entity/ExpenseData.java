@@ -14,16 +14,16 @@ public class ExpenseData {
 	@Id
 	@Column(name="id", unique=true)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public long id;
+	public Long id;
 	
 	@Column(name="transaction_date")
 	public Date transactionDate;
 	
 	@Column(name="credit_amount")
-	public double credit_amt;
+	public Double credit_amt;
 	
 	@Column(name="debit_amount")
-	public double debit_amt;
+	public Double debit_amt;
 	
 	@Column(name="naration")
 	public String naration;
@@ -35,7 +35,16 @@ public class ExpenseData {
 		super();
 	}
 	
-	public ExpenseData(Date transactionDate, double credit_amt, double debit_amt, String naration, String category) {
+	public ExpenseData(Date transactionDate, String naration, Double credit_amt, Double debit_amt) {
+		super();
+		this.transactionDate = transactionDate;
+		this.credit_amt = credit_amt;
+		this.debit_amt = debit_amt;
+		this.naration = naration;
+		this.category = "DEFAULT";
+	}
+	
+	public ExpenseData(Date transactionDate, Double credit_amt, Double debit_amt, String naration, String category) {
 		super();
 		this.transactionDate = transactionDate;
 		this.credit_amt = credit_amt;
@@ -44,7 +53,7 @@ public class ExpenseData {
 		this.category = category;
 	}
 	
-	public ExpenseData(long id, Date transactionDate, double credit_amt, double debit_amt, String naration,
+	public ExpenseData(Long id, Date transactionDate, Double credit_amt, Double debit_amt, String naration,
 			String category) {
 		super();
 		this.id = id;
@@ -58,7 +67,7 @@ public class ExpenseData {
 	public long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public Date getTransactionDate() {
@@ -70,13 +79,13 @@ public class ExpenseData {
 	public double getCredit_amt() {
 		return credit_amt;
 	}
-	public void setCredit_amt(double credit_amt) {
+	public void setCredit_amt(Double credit_amt) {
 		this.credit_amt = credit_amt;
 	}
 	public double getDebit_amt() {
 		return debit_amt;
 	}
-	public void setDebit_amt(double debit_amt) {
+	public void setDebit_amt(Double debit_amt) {
 		this.debit_amt = debit_amt;
 	}
 	public String getNaration() {

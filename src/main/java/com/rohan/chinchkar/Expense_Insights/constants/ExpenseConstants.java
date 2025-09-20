@@ -12,7 +12,7 @@ public class ExpenseConstants {
 	public static final String LOAN_EMI = "LOAN_EMI";
 	public static final String FITNESS = "FITNESS";
 	public static final String OTHER = "OTHER";
-//	public static final String FOOD = "FOOD";
+	public static final String DEFAULT = "DEFAULT";
 	
 	// Constants
 	public static final String Date = "Date";

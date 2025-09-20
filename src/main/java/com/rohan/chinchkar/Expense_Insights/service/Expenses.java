@@ -12,8 +12,8 @@ import com.rohan.chinchkar.Expense_Insights.entity.ExpenseData;
 public interface Expenses {
 	
 	public int saveExpenseDataSheetImpl(MultipartFile file);
-	public int uploadExpenseDtataSheetImpl(MultipartFile file);
-	public List<ExpenseData> getExpenseInsightsImpl();
-	public int saveAllUniqueRecords(List<ExpenseData> expenseDataList);
+	public int uploadExpenseDataSheetImpl(MultipartFile file);
+	public List<ExpenseData> getExpenseInsightsImpl(String month);
 	public Map<String, String> getMonthlyExpensesDetailsForYear(int year);
+	
 }

@@ -26,22 +26,30 @@ public class ExpensesController {
 	
 	private static final Logger logger = (Logger) LoggerFactory.getLogger(ExpenseInsightsApplication.class);
 	
-	@PostMapping(value = "/expense/uploadExpenseDtataSheet")
-	public ResponseEntity<String> uploadExpenseDtataSheet(@RequestParam("file") MultipartFile file) {
+	@PostMapping(value = "/csv/uploadExpenseDataSheet")
+	public ResponseEntity<String> uploadExpenseDataSheet(@RequestParam("file") MultipartFile file) {
 		logger.info("#### Calling ExpensesImpl class for saving provided data");
-		int numberOfRecordStored = expenses.uploadExpenseDtataSheetImpl(file);
+		int numberOfRecordStored = expenses.uploadExpenseDataSheetImpl(file);
 		String responseString = String.format("Successfully uploaded Sheet with %d unique records", numberOfRecordStored);
 		return new ResponseEntity<>(responseString,HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/expense/getInsights")
+	@PostMapping(value = "/excel/uploadExpenseDataSheet")
+	public ResponseEntity<String> saveExpenseDataSheet(@RequestParam("file") MultipartFile file) {
+		logger.info("#### Calling ExpensesImpl class for saving provided data");
+		int numberOfRecordStored = expenses.saveExpenseDataSheetImpl(file);
+		String responseString = String.format("Successfully uploaded Sheet with %d unique records", numberOfRecordStored);
+		return new ResponseEntity<>(responseString,HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getInsights")
 	public ResponseEntity<List<ExpenseData>> getExpenseInsights(@RequestParam String month) {
 		
-		List<ExpenseData> listOfData=expenses.getExpenseInsightsImpl();
+		List<ExpenseData> listOfData=expenses.getExpenseInsightsImpl(month);
 		return new ResponseEntity<List<ExpenseData>>(listOfData, HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/expense/V1/getMonthlyExpensesForYear")
+	@GetMapping(value = "/v1/getMonthlyExpensesForYear")
 	public ResponseEntity<Map<String, String>> getMonthlyExpensesDetails(@RequestParam int year) {
 		
 		Map<String, String> listOfData=expenses.getMonthlyExpensesDetailsForYear(year);
